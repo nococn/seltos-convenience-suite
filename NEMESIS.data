@@ -1,0 +1,29 @@
+[nemesis]
+version=1.1
+id=seltos.convenience
+name=셀토스 편의 기능 패키지 (Seltos Suite)
+type=service,application
+package-version=1.0.0
+short-desc="유선/동글 카플레이 계기판 연동, 자동 화면 전환, AAC 고음질 패치"
+detailed-desc="기아 더 뉴 셀토스 SP2PE 전용 편의 패키지:
+1. 유선/동글 카플레이 턴바이턴 계기판 연동 (T-Map/네이버지도)
+2. 시동 후 카플레이 자동 전체화면 전환 (후방카메라 간섭 방지)
+3. 순정 오디오 AAC 고음질 무손실 패치
+4. 서드파티 독립 앱(유튜브 등) 원터치 설치 지원"
+os="SP2PE.KOR.*"
+models="*_kr"
+postinstall=scripts/post.sh
+preuninstall=scripts/preun.sh
+
+[app.0]
+kind=sh
+name=서드파티 앱 설치
+path=bin/install_apps.sh
+uid=root
+
+[service.0]
+name=cp-autolaunch
+kind=sh
+path=svc/autolaunch.sh
+uid=root
+mode=restart
