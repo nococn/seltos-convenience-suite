@@ -15,7 +15,9 @@ log "=== 셀토스 편의 패키지 설치 시작 ==="
 
 # 1. 실행 권한 부여
 chmod 755 $APP_DIR/svc/autolaunch.sh
-chmod 755 $APP_DIR/bin/install_apps.sh
+chmod 755 $APP_DIR/bin/audio_on.sh
+chmod 755 $APP_DIR/bin/audio_off.sh
+chmod 755 $APP_DIR/bin/dsp_engine.sh
 
 # 2. HMG-API 모드(TBT 클러스터 연동 및 AAC 오디오) 설치
 if command -v hmgapid >/dev/null 2>&1; then
@@ -35,16 +37,12 @@ fi
 # 3. 카플레이 프로젝션 속성 확인
 setprop persist.ium.support carplay
 
-# 4. 번들 앱 자동 설치
-if [ -d $APP_DIR/apps ]; then
-    for APK in $APP_DIR/apps/*.apk; do
-        if [ -f "$APK" ]; then
-            log "번들 앱 설치: $APK"
-            pm install -r "$APK" >> $LOG 2>&1
-        fi
-    done
+# 4. ALSA DSP 10밴드 파라메트릭 EQ 및 라우드니스 기본 활성화
+if [ -f "$APP_DIR/bin/audio_on.sh" ]; then
+    log "ALSA DSP 10밴드 파라메트릭 EQ 및 라우드니스 적용..."
+    sh "$APP_DIR/bin/audio_on.sh" >> $LOG 2>&1
 fi
 
-notice "셀토스 편의 기능 패키지가 성공적으로 설치되었습니다!"
+notice "셀토스 편의 기능 패키지(v1.2.0)가 성공적으로 설치되었습니다!"
 log "=== 설치 완료 ==="
 exit 0

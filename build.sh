@@ -10,7 +10,7 @@ python3 -c "
 import zipfile, os
 
 zipf = zipfile.ZipFile('${OUTPUT_ZIP}', 'w', zipfile.ZIP_DEFLATED)
-targets = ['NEMESIS.data', 'bin', 'scripts', 'svc', 'hmgapi']
+targets = ['NEMESIS.data', 'bin', 'etc', 'scripts', 'svc', 'hmgapi']
 
 for target in targets:
     if os.path.isfile(target):
