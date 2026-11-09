@@ -15,9 +15,11 @@ log "=== 셀토스 편의 패키지 설치 시작 ==="
 
 # 1. 실행 권한 부여
 chmod 755 $APP_DIR/svc/autolaunch.sh
+chmod 755 $APP_DIR/svc/hud_telemetry.sh
 chmod 755 $APP_DIR/bin/audio_on.sh
 chmod 755 $APP_DIR/bin/audio_off.sh
 chmod 755 $APP_DIR/bin/dsp_engine.sh
+chmod 755 $APP_DIR/bin/hud_toggle.sh
 
 # 2. HMG-API 모드(TBT 클러스터 연동 및 AAC 오디오) 설치
 if command -v hmgapid >/dev/null 2>&1; then
@@ -43,6 +45,6 @@ if [ -f "$APP_DIR/bin/audio_on.sh" ]; then
     sh "$APP_DIR/bin/audio_on.sh" >> $LOG 2>&1
 fi
 
-notice "셀토스 편의 기능 패키지(v1.2.0)가 성공적으로 설치되었습니다!"
+notice "셀토스 편의 기능 패키지(v1.3.0)가 성공적으로 설치되었습니다!"
 log "=== 설치 완료 ==="
 exit 0

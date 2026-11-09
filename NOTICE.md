@@ -23,5 +23,5 @@ This project integrates, adapts, and builds upon several pioneering open-source 
 ---
 **Seltos SP2PE Convenience Suite Integration & Daemons**
 - Maintained by: Kim Do-hyeong ([@nococn](https://github.com/nococn))
-- Purpose: Tailored solution for Kia Seltos SP2PE and unpopulated Wi-Fi (DNP) Gen5W head units, providing wired/dongle CarPlay cluster TBT, reverse-camera aware auto-launch, AAC audio codec enhancement, and ALSA DSP 10-band parametric EQ tuning with road noise loudness boosting and A/B comparison toggle.
+- Purpose: Tailored solution for Kia Seltos SP2PE and unpopulated Wi-Fi (DNP) Gen5W head units, providing wired/dongle CarPlay cluster TBT, reverse-camera aware auto-launch, AAC audio codec enhancement, ALSA DSP 10-band parametric EQ tuning, and HUD-style mini telemetry overlay with steering wheel star button toggle.
 - License: GNU AGPL-3.0
