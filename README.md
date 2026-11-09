@@ -1,12 +1,12 @@
-# 🚙 Seltos SP2PE Convenience Suite (Gen5W)
+# 🚙 기아 더 뉴 셀토스 편의 기능 패키지 (Gen5W)
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Vehicle: Kia Seltos SP2PE](https://img.shields.io/badge/Vehicle-Kia_Seltos_SP2PE-darkred.svg)](https://www.kia.com)
 [![Infotainment: Gen5W Standard-class](https://img.shields.io/badge/Infotainment-Mobis_Gen5W-success.svg)](https://github.com/nococn/seltos-convenience-suite)
 [![Platform: Android 4.4.2 KitKat](https://img.shields.io/badge/Platform-Android_4.4.2_KitKat-orange.svg)](https://github.com/nococn/seltos-convenience-suite)
 
-> **Kia Seltos SP2PE (The New Seltos, Gen5W Standard-class Navigation)**  
-> **Turn-by-Turn Cluster Guidance · Smart Auto-Launch · High-Res AAC Audio · App Sideloading**
+> **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 패키지**  
+> **카플레이 계기판/HUD 턴바이턴 안내 · 자동 화면 전환 · 고음질 오디오 · 앱 설치 (Seltos SP2PE Convenience Suite)**
 
 기아 **더 뉴 셀토스(SP2PE)** 등 하드웨어상 Wi-Fi 칩셋이 미실장(DNP - Do Not Populate)된 내수용 현대·기아 5세대 와이드(Gen5W) 순정 내비게이션 전용 통합 편의 기능 패키지입니다.
 
