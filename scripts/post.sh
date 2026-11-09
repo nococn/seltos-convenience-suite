@@ -45,6 +45,6 @@ if [ -f "$APP_DIR/bin/audio_on.sh" ]; then
     sh "$APP_DIR/bin/audio_on.sh" >> $LOG 2>&1
 fi
 
-notice "셀토스 편의 기능 패키지(v1.3.0)가 성공적으로 설치되었습니다!"
+notice "셀토스 편의 기능 패키지(v1.3.1)가 성공적으로 설치되었습니다!"
 log "=== 설치 완료 ==="
 exit 0
