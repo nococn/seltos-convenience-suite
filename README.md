@@ -6,7 +6,7 @@
 [![Platform: Android 4.4.2 KitKat](https://img.shields.io/badge/Platform-Android_4.4.2_KitKat-orange.svg)](https://github.com/nococn/seltos-convenience-suite)
 
 > **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 패키지**  
-> **카플레이 계기판/HUD 턴바이턴 안내 · 자동 화면 전환 · 고음질 오디오 · 앱 설치 (Seltos SP2PE Convenience Suite)**
+> **카플레이 계기판/HUD 턴바이턴 안내 · 자동 화면 전환 · 고음질 오디오 A/B 비교 (Seltos SP2PE Convenience Suite)**
 
 기아 **더 뉴 셀토스(SP2PE)** 등 하드웨어상 Wi-Fi 칩셋이 미실장(DNP - Do Not Populate)된 내수용 현대·기아 5세대 와이드(Gen5W) 순정 내비게이션 전용 통합 편의 기능 패키지입니다.
 
@@ -27,8 +27,8 @@
 ### 3. 🎵 순정 오디오 AAC 고음질 코덱 패치 (Hi-Res Audio)
 * **저대역폭 디코더 개선**: Gen5W 기본 오디오의 저대역폭 압축 라이브러리를 고해상도 AAC(`libleafiaaac.so`) 오디오 엔진으로 교체하여 카플레이 스트리밍(Apple Music, Melon, Spotify 등)의 음질 왜곡을 줄이고 다이내믹 레인지를 복원합니다.
 
-### 4. 📦 서드파티 독립 앱 무인 간편 설치 (App Sideloading)
-* **자동 배치 인스톨러 (`bin/install_apps.sh`)**: USB의 `/apps/*.apk` 디렉터리에 저장된 안드로이드 4.4(KitKat) 호환 앱을 감지하여 백그라운드에서 원터치로 순정 시스템에 설치합니다.
+### 4. 🎚️ 고음질 ON / 순정 OFF 원터치 A/B 비교 스위치
+* **실시간 원터치 음질 비교**: NEMESIS Manager 앱 목록에서 `[오디오 고음질 ON]` 및 `[오디오 순정 모드 OFF]`를 원터치로 전환하여 순정 오디오와 패치 후 음질 차이를 차량 안에서 즉각적으로 비교 청음할 수 있습니다.
 
 ---
 
@@ -52,13 +52,6 @@
    USB Drive (FAT32)
    └── packages/
        └── seltos-convenience-pack.zip
-   ```
-3. *(선택 사항)* 순정 화면에서 실행할 추가 앱이 있는 경우, USB 루트에 `apps` 폴더를 만들고 안드로이드 4.4 호환 APK 파일을 넣습니다:
-   ```text
-   USB Drive (FAT32)
-   └── apps/
-       ├── NewPipeLegacy_0.20.8.apk
-       └── MXPlayer_NEON_KitKat.apk
    ```
 
 ### 2단계: 차량 내비게이션 설치
