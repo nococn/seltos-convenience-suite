@@ -6,7 +6,7 @@
 [![Platform: Android 4.4.2 KitKat](https://img.shields.io/badge/Platform-Android_4.4.2_KitKat-orange.svg)](https://github.com/nococn/seltos-convenience-suite)
 
 > **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 패키지**  
-> **카플레이 계기판/HUD 턴바이턴 안내 · 자동 화면 전환 · 6스피커 맞춤 ALSA DSP 10밴드 EQ · HUD 미니 텔레메트리 (Seltos Suite v1.3.1)**
+> **카플레이 계기판/HUD 턴바이턴 안내 · 자동 화면 전환 · 6스피커 맞춤 ALSA DSP 10밴드 EQ · HUD 미니 텔레메트리 (Seltos Suite v1.3.2)**
 
 기아 **더 뉴 셀토스(SP2PE)** 등 하드웨어상 Wi-Fi 칩셋이 미실장(DNP - Do Not Populate)된 내수용 현대·기아 5세대 와이드(Gen5W) 순정 내비게이션 전용 통합 편의 기능 패키지입니다.
 

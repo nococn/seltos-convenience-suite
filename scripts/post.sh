@@ -27,7 +27,7 @@ if command -v hmgapid >/dev/null 2>&1; then
     
     # 지도 복사 (필요시)
     if [ -d $APP_DIR/hmgapi/maps ] && [ -d /data/hmgapi/maps ]; then
-        cp -rn $APP_DIR/hmgapi/maps/* /data/hmgapi/maps/ 2>/dev/null
+        cp -r $APP_DIR/hmgapi/maps/* /data/hmgapi/maps/ 2>/dev/null || true
     fi
     
     # 모드 설치 및 적용
@@ -45,6 +45,6 @@ if [ -f "$APP_DIR/bin/audio_on.sh" ]; then
     sh "$APP_DIR/bin/audio_on.sh" >> $LOG 2>&1
 fi
 
-notice "셀토스 편의 기능 패키지(v1.3.1)가 성공적으로 설치되었습니다!"
+notice "셀토스 편의 기능 패키지(v1.3.2)가 성공적으로 설치되었습니다!"
 log "=== 설치 완료 ==="
 exit 0
