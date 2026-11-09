@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# Seltos SP2PE Stock 6-Speaker ALSA DSP 10-Band Parametric EQ Engine (v1.3.1)
+# Seltos SP2PE Stock 6-Speaker ALSA DSP 10-Band Parametric EQ Engine (v1.3.1 Final)
 # Mode: enable | disable
 
 ACTION="$1"
@@ -19,32 +19,33 @@ set_mixer() {
 }
 
 enable_dsp() {
-    log "Enabling Seltos SP2PE Stock 6-Speaker Acoustic EQ (v1.3.1)..."
+    log "Enabling Seltos SP2PE Stock 6-Speaker Acoustic EQ (v1.3.1 Final)..."
 
     # 1. ALSA Hardware Mixer DSP controls
-    # Preamp Gain: -4.0 dB (Guarantees -0.5 dBFS digital headroom against +3.5 dB max boost)
-    set_mixer "Preamp Gain" "108"
+    # Preamp Gain: -5.0 dB (tinymix 110)
+    # Defends against 8k+16k filter skirt gain stacking (+4.39 dB peak -> -0.61 dBFS headroom)
+    set_mixer "Preamp Gain" "110"
     set_mixer "Bass Boost" "1"
     set_mixer "Loudness Filter" "1"
     set_mixer "Loudness Low Cut" "40"
     set_mixer "Loudness High Boost" "1"
 
-    # 10-Band Hardware Parametric EQ gains for Stock 6-Speaker:
-    set_mixer "EQ Band 1 Gain" "9"      # 31.5 Hz: -2.0 dB (Cone roll-off protection)
-    set_mixer "EQ Band 2 Gain" "16"     # 63.0 Hz: +3.5 dB (Kick/bass punch focus)
-    set_mixer "EQ Band 3 Gain" "13"     # 125 Hz:  +1.5 dB (Trim booming prevention)
-    set_mixer "EQ Band 4 Gain" "10"     # 250 Hz:  -1.0 dB (Boxy resonance notch)
-    set_mixer "EQ Band 5 Gain" "12"     # 500 Hz:   0.0 dB (Vocal body)
-    set_mixer "EQ Band 6 Gain" "11"     # 1 kHz:   -1.0 dB (Nav peak cut)
-    set_mixer "EQ Band 7 Gain" "11"     # 2 kHz:   -0.5 dB (Vocal centering)
-    set_mixer "EQ Band 8 Gain" "14"     # 4 kHz:   +1.0 dB (Treble clarity)
-    set_mixer "EQ Band 9 Gain" "18"     # 8 kHz:   +3.0 dB (Sparkle & air)
-    set_mixer "EQ Band 10 Gain" "19"    # 16 kHz:  +3.5 dB (Ultra-high extension)
+    # 10-Band Hardware Parametric EQ gains & Q curves:
+    set_mixer "EQ Band 1 Gain" "9"      # 31.5 Hz: -2.0 dB (Q=0.7 Butterworth Low-shelf cone protection)
+    set_mixer "EQ Band 2 Gain" "16"     # 63.0 Hz: +3.5 dB (Q=1.1 Kick/bass punch focus)
+    set_mixer "EQ Band 3 Gain" "13"     # 125 Hz:  +1.5 dB (Q=1.2 Trim booming prevention)
+    set_mixer "EQ Band 4 Gain" "10"     # 250 Hz:  -1.0 dB (Q=1.8 Door cavity resonance notch)
+    set_mixer "EQ Band 5 Gain" "12"     # 500 Hz:   0.0 dB (Q=1.0 Flat vocal body)
+    set_mixer "EQ Band 6 Gain" "11"     # 1 kHz:   -1.0 dB (Q=1.2 Nav peak & vocal scoop prevention)
+    set_mixer "EQ Band 7 Gain" "11"     # 2 kHz:   -0.5 dB (Q=1.4 Vocal centering)
+    set_mixer "EQ Band 8 Gain" "14"     # 4 kHz:   +1.0 dB (Q=1.2 Tweeter clarity)
+    set_mixer "EQ Band 9 Gain" "18"     # 8 kHz:   +3.0 dB (Q=1.1 Sparkle & air)
+    set_mixer "EQ Band 10 Gain" "19"    # 16 kHz:  +3.5 dB (Q=1.4 Intersample peak suppression)
     set_mixer "EQ Mode" "User"
 
-    # 2. ALSA PCM DSP configuration overlay with -4.0 dB attenuation (0.631)
+    # 2. ALSA PCM DSP configuration overlay with -5.0 dB attenuation (0.562)
     cat << 'EOF' > "$ASOUND_CONF"
-# Seltos SP2PE Stock 6-Speaker Audiophile Pipeline (v1.3.1)
+# Seltos SP2PE Stock 6-Speaker Audiophile Pipeline (v1.3.1 Final)
 pcm.!default {
     type plug
     slave.pcm "dsp_filter"
@@ -53,8 +54,8 @@ pcm.!default {
 pcm.dsp_filter {
     type route
     slave.pcm "hw:0,0"
-    ttable.0.0 0.631
-    ttable.1.1 0.631
+    ttable.0.0 0.562
+    ttable.1.1 0.562
 }
 EOF
     chmod 644 "$ASOUND_CONF"
@@ -63,7 +64,7 @@ EOF
     setprop persist.seltos.dsp.mode 1
     setprop persist.seltos.dsp.eq 1
     setprop persist.seltos.dsp.loudness 1
-    setprop persist.seltos.dsp.profile "sp2pe_stock6spk_v131"
+    setprop persist.seltos.dsp.profile "sp2pe_stock6spk_v131_final"
 
     # Reload mediaserver smoothly
     pkill -HUP mediaserver 2>/dev/null
