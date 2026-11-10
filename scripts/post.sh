@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# postinstall for seltos.convenience (v1.7.3)
+# postinstall for seltos.convenience (v1.7.4)
 # v1.7.1과 달라진 점: 각 단계의 성공/실패를 기록하고 토스트에 그대로 표시.
 # 지도 검증이 끝내 실패하면 시스템 패치(install/apply)를 하지 않음.
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
@@ -16,7 +16,7 @@ step() { # step <이름> <명령...> : 결과를 기록하고 종료코드를 �
 }
 
 : > $ST
-log "=== 셀토스 편의 기능 패키지(v1.7.3) 설치 시작 ==="
+log "=== 셀토스 편의 기능 패키지(v1.7.4) 설치 시작 ==="
 for f in svc/autolaunch.sh bin/audio_toggle.sh bin/audio_on.sh bin/audio_off.sh bin/dsp_engine.sh bin/diag.sh bin/logger_toggle.sh svc/logger.sh; do chmod 755 "$APP_DIR/$f"; done
 
 setprop persist.ium.support carplay
@@ -70,6 +70,6 @@ if command -v tinymix >/dev/null 2>&1; then EQ="tinymix 있음"; else EQ="tinymi
 log "EQ 결과: $EQ"
 echo "TBT: $TBT" >> $ST; echo "EQ: $EQ" >> $ST
 
-toast "Suite v1.7.3 | TBT: $TBT | EQ: $EQ"
+toast "Suite v1.7.4 | TBT: $TBT | EQ: $EQ"
 log "=== 설치 종료 ==="
 exit 0

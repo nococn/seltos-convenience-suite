@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# Seltos Suite 진단 수집 v1.7.3
+# Seltos Suite 진단 수집 v1.7.4
 # 이 헤드유닛(Android 4.4.2)에는 head/tail이 없어서 순수 쉘로 대체함.
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:$PATH
 OUT=/data/local/tmp/seltos-diag.txt
