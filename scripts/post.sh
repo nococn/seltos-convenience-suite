@@ -1,90 +1,75 @@
 #!/system/bin/sh
-# postinstall for seltos.convenience (v1.7.0)
+# postinstall for seltos.convenience (v1.7.3)
+# v1.7.1과 달라진 점: 각 단계의 성공/실패를 기록하고 토스트에 그대로 표시.
+# 지도 검증이 끝내 실패하면 시스템 패치(install/apply)를 하지 않음.
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
-
 APP_DIR=/data/nemesis/apps/seltos.convenience
 LOG=/data/local/tmp/seltos-suite-install.log
-
+ST=/data/local/tmp/seltos-status.txt
 log() { echo "[$(date '+%m-%d %H:%M:%S')] $*" | tee -a $LOG; }
-notice() {
-    log "$*"
-    am broadcast -a com.hkmc.telematics.action.SHOW_TOAST --es message "$*" >/dev/null 2>&1
+toast() { am broadcast -a com.hkmc.telematics.action.SHOW_TOAST --es message "$*" >/dev/null 2>&1; }
+step() { # step <이름> <명령...> : 결과를 기록하고 종료코드를 그대로 반환
+    NAME="$1"; shift
+    "$@" >> $LOG 2>&1; RC=$?
+    log "$NAME rc=$RC"; echo "$NAME rc=$RC" >> $ST
+    return $RC
 }
 
-log "=== 셀토스 편의 기능 패키지(v1.7.0) 설치 시작 ==="
+: > $ST
+log "=== 셀토스 편의 기능 패키지(v1.7.3) 설치 시작 ==="
+for f in svc/autolaunch.sh bin/audio_toggle.sh bin/audio_on.sh bin/audio_off.sh bin/dsp_engine.sh bin/diag.sh bin/logger_toggle.sh svc/logger.sh; do chmod 755 "$APP_DIR/$f"; done
 
-# 1. 실행 권한 부여
-chmod 755 $APP_DIR/svc/autolaunch.sh
-chmod 755 $APP_DIR/bin/audio_toggle.sh
-chmod 755 $APP_DIR/bin/audio_on.sh
-chmod 755 $APP_DIR/bin/audio_off.sh
-chmod 755 $APP_DIR/bin/dsp_engine.sh
-chmod 755 $APP_DIR/bin/diag.sh
-
-# 2. 카플레이 프로젝션 및 iAP2 라우트 가이던스(TBT) 속성 활성화
 setprop persist.ium.support carplay
 setprop persist.sys.iap2.routeguidance 1
 setprop persist.sys.iap2.tbt 1
 
-# 3. HMG-API DiPO 계기판 TBT 연동 모드 설치 (무선 핫스팟 배제, 순수 유선/동글 TBT 전용)
-if command -v hmgapid >/dev/null 2>&1; then
-    log "HMG-API 데몬 확인됨. 응답 대기 중..."
-    
-    # 데몬 응답 대기 (ping 루프)
-    PING_COUNT=0
+TBT="미적용"
+if ! command -v hmgapid >/dev/null 2>&1; then
+    TBT="미적용(hmgapid 없음)"
+else
+    PING=0
     until hmgapid ping >/dev/null 2>&1; do
-        sleep 1
-        PING_COUNT=$((PING_COUNT + 1))
-        if [ $PING_COUNT -ge 15 ]; then
-            log "HMG-API 데몬 ping 타임아웃 (15초 경과)"
-            break
-        fi
+        sleep 1; PING=$((PING+1))
+        [ $PING -ge 15 ] && break
     done
-    log "HMG-API 데몬 준비 완료 (ping 대기: ${PING_COUNT}초)"
-    
-    # 순정 맵 복사: unknown/sp2pe/kor/260902 및 kia/seltos/kor/260902 양방향 배포
-    if [ -d "$APP_DIR/hmgapi/maps" ]; then
-        mkdir -p /data/hmgapi/maps 2>/dev/null || true
-        cp -r $APP_DIR/hmgapi/maps/* /data/hmgapi/maps/ 2>/dev/null || true
-        log "HMG-API 순정 맵 복사 완료 (/data/hmgapi/maps/)"
-    fi
-    
-    # 맵 유효성 검증 및 map-car --write 폴백
-    log "HMG-API 맵 유효성 검증(verify-map) 수행..."
-    if ! hmgapid engine verify-map >> $LOG 2>&1; then
-        log "맵 검증 실패 감지 -> 실차 바이너리 기반 훅 지도 자동 생성(map-car --write) 실행..."
-        hmgapid engine map-car --write >> $LOG 2>&1 || true
-        hmgapid engine verify-map >> $LOG 2>&1 || true
+    log "hmgapid ping 대기 ${PING}초"
+    mkdir -p /data/hmgapi/maps 2>/dev/null
+    cp -r "$APP_DIR"/hmgapi/maps/* /data/hmgapi/maps/ 2>>$LOG
+
+    if ! step "verify-map(1차)" hmgapid engine verify-map; then
+        step "map-car --write" hmgapid engine map-car --write
+        step "verify-map(2차)" hmgapid engine verify-map
+        VM=$?
     else
-        log "HMG-API 맵 유효성 검증 정상 통과"
+        VM=0
     fi
-    
-    # wireless-carplay-aa 모드 클린 설치 및 TBT 단독 적용
-    if [ -f "$APP_DIR/hmgapi/wireless-carplay-aa.zip" ]; then
-        log "기존 모드 서명 충돌 방지 클린 제거..."
-        hmgapid engine remove wireless-carplay-aa >> $LOG 2>&1 || true
-        hmgapid engine apply >> $LOG 2>&1 || true
-        
-        log "SP2PE TBT 엔진 모드 클린 인스톨..."
-        hmgapid engine install "$APP_DIR/hmgapi/wireless-carplay-aa.zip" >> $LOG 2>&1 || true
-        
-        # 무선 핫스팟/브릿지 배제, 유선/동글 순수 계기판 TBT 훅만 강제 활성화
-        hmgapid engine set-setting wireless-carplay-aa tbt true >> $LOG 2>&1 || true
-        hmgapid engine set-setting wireless-carplay-aa bridge false >> $LOG 2>&1 || true
-        hmgapid engine set-setting wireless-carplay-aa audio false >> $LOG 2>&1 || true
-        
-        log "HMG-API 모드 엔진 최종 적용(apply)..."
-        hmgapid engine apply >> $LOG 2>&1 || true
-        log "HMG-API DiPO TBT 훅 엔진 적용 완료."
+
+    if [ "$VM" -ne 0 ]; then
+        TBT="미적용(지도 검증 실패)"
+        log "지도 검증 실패 -> 시스템 패치 중단"
+    else
+        step "remove(기존 모드)" hmgapid engine remove wireless-carplay-aa   # 없을 수 있음
+        if step "install" hmgapid engine install "$APP_DIR/hmgapi/wireless-carplay-aa.zip"; then
+            step "set tbt"    hmgapid engine set-setting wireless-carplay-aa tbt true
+            step "set bridge" hmgapid engine set-setting wireless-carplay-aa bridge false
+            step "set audio"  hmgapid engine set-setting wireless-carplay-aa audio false
+            if step "apply" hmgapid engine apply; then
+                TBT="적용 시도 성공(실제 TBT는 직결 시험으로 확인 필요)"
+            else
+                TBT="apply 실패"
+            fi
+        else
+            TBT="install 실패"
+        fi
     fi
 fi
+log "TBT 결과: $TBT"
 
-# 4. ALSA DSP 10밴드 파라메트릭 EQ 기본 활성화
-if [ -f "$APP_DIR/bin/dsp_engine.sh" ]; then
-    log "기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ 적용..."
-    sh "$APP_DIR/bin/dsp_engine.sh" enable >> $LOG 2>&1
-fi
+sh "$APP_DIR/bin/dsp_engine.sh" enable >> $LOG 2>&1
+if command -v tinymix >/dev/null 2>&1; then EQ="tinymix 있음"; else EQ="tinymix 없음-믹서 EQ 불가, asound.conf -5dB만(효과 미검증)"; fi
+log "EQ 결과: $EQ"
+echo "TBT: $TBT" >> $ST; echo "EQ: $EQ" >> $ST
 
-notice "셀토스 계기판 TBT & 10밴드 DSP 패키지(v1.7.1) 설치 완료!"
-log "=== 설치 완료 ==="
+toast "Suite v1.7.3 | TBT: $TBT | EQ: $EQ"
+log "=== 설치 종료 ==="
 exit 0

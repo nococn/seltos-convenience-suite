@@ -10,6 +10,10 @@ log "=== 셀토스 편의 패키지 삭제 시작 ==="
 
 # 데몬 종료
 pkill -f autolaunch.sh 2>/dev/null
+# 로그 기록 서비스 정리
+TMPD=/data/local/tmp
+[ -f $TMPD/seltos-logger.pid ] && kill $(cat $TMPD/seltos-logger.pid) 2>/dev/null
+rm -f $TMPD/seltos-logger.pid $TMPD/seltos-logger.off $TMPD/seltos-logcat.log $TMPD/seltos-logcat.log.1 $TMPD/seltos-logcat.log.2 $TMPD/seltos-logcat.log.3 $TMPD/seltos-logcat.log.4
 
 # ALSA DSP EQ 해제 및 원복
 if [ -f "$APP_DIR/bin/dsp_engine.sh" ]; then
