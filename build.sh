@@ -67,23 +67,24 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = b'''Seltos Convenience Suite v1.7.0 - USB Install Guide
+readme_text = '''Seltos Convenience Suite v1.7.1 - USB Install Guide
 ===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).
 2. Root Structure:
    USB Drive (Top Level)
-   \xe2\x94\x9c\xe2\x94\x80\xe2\x94\x80 NEMESIS.data
-   \xe2\x94\x9c\xe2\x94\x80\xe2\x94\x80 README.txt
-   \xe2\x94\x94\xe2\x94\x80\xe2\x94\x80 packages
-       \xe2\x94\x94\xe2\x94\x80\xe2\x94\x80 seltos.convenience.zip
+   ├── NEMESIS.data
+   ├── README.txt
+   └── packages
+       └── seltos.convenience.zip
 
 3. In-Car Execution:
    - Start vehicle and wait for head unit navigation to fully boot.
    - Insert USB drive into front multimedia USB port.
    - When NEMESIS prompts to install package, tap 'Yes' within 60s.
    - After installation toast appears, reboot head unit via RESET pinhole.
-'''
+   - To collect full ALSA/tinymix/HMG-API diagnosis: open NEMESIS apps and tap '셀토스 실차 진단 데이터 수집'.
+'''.encode('utf-8')
 
 with zipfile.ZipFile(usb_zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
     # 1. Root NEMESIS.data (trigger)

@@ -19,6 +19,7 @@ chmod 755 $APP_DIR/bin/audio_toggle.sh
 chmod 755 $APP_DIR/bin/audio_on.sh
 chmod 755 $APP_DIR/bin/audio_off.sh
 chmod 755 $APP_DIR/bin/dsp_engine.sh
+chmod 755 $APP_DIR/bin/diag.sh
 
 # 2. 카플레이 프로젝션 및 iAP2 라우트 가이던스(TBT) 속성 활성화
 setprop persist.ium.support carplay
@@ -84,6 +85,6 @@ if [ -f "$APP_DIR/bin/dsp_engine.sh" ]; then
     sh "$APP_DIR/bin/dsp_engine.sh" enable >> $LOG 2>&1
 fi
 
-notice "셀토스 계기판 TBT & 10밴드 DSP 패키지(v1.7.0) 설치 완료!"
+notice "셀토스 계기판 TBT & 10밴드 DSP 패키지(v1.7.1) 설치 완료!"
 log "=== 설치 완료 ==="
 exit 0

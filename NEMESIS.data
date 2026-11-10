@@ -3,9 +3,9 @@ version=1.1
 id=seltos.convenience
 name=셀토스 편의 기능 패키지 (Seltos Suite)
 type=service,application
-package-version=1.7.0
-short-desc="셀토스 SP2PE 전용 계기판 TBT 엔진(v1.7.0) & 10밴드 ALSA DSP EQ"
-detailed-desc="기아 더 뉴 셀토스 SP2PE Gen5W 전용: 1. SP2PE 실차 해시 맵핑 및 HMG-API DiPO 계기판 턴바이턴(TBT) 연동 · 2. 순정 기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ (-5.0dBFS 마스터 프리앰프 클리핑 방어) · 3. 카플레이 자동 화면 전환 및 원터치 A/B 청음 토글."
+package-version=1.7.1
+short-desc="셀토스 SP2PE 전용 계기판 TBT 엔진(v1.7.1) & 10밴드 ALSA DSP EQ & 실차 진단기"
+detailed-desc="기아 더 뉴 셀토스 SP2PE Gen5W 전용: 1. SP2PE 실차 해시 맵핑 및 HMG-API DiPO 계기판 턴바이턴(TBT) 연동 · 2. 순정 기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ (-5.0dBFS 마스터 프리앰프 클리핑 방어) · 3. 카플레이 자동 화면 전환 및 원터치 A/B 청음 토글 · 4. 실차 ALSA/HMG-API 상태 진단 데이터 원클릭 USB 수집."
 os="SP2PE.KOR.*"
 models="*_kr"
 postinstall=scripts/post.sh
@@ -15,6 +15,12 @@ preuninstall=scripts/preun.sh
 kind=sh
 name=10밴드 DSP EQ 음향 토글 (A/B 청음)
 path=bin/audio_toggle.sh
+uid=root
+
+[app.1]
+kind=sh
+name=셀토스 실차 진단 데이터 수집 (USB 저장)
+path=bin/diag.sh
 uid=root
 
 [service.0]
