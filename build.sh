@@ -67,7 +67,7 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = b'''Seltos Convenience Suite v1.5.0 - USB Install Guide
+readme_text = b'''Seltos Convenience Suite v1.6.0 - USB Install Guide
 ===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).
@@ -88,14 +88,14 @@ readme_text = b'''Seltos Convenience Suite v1.5.0 - USB Install Guide
 with zipfile.ZipFile(usb_zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
     # 1. Root NEMESIS.data (trigger)
     info1 = zipfile.ZipInfo('NEMESIS.data')
-    info1.date_time = (2026, 11, 10, 16, 50, 0)
+    info1.date_time = (2026, 11, 10, 17, 50, 0)
     info1.compress_type = zipfile.ZIP_DEFLATED
     info1.external_attr = 0o100644 << 16
     z.writestr(info1, root_nemesis_data)
 
     # 2. Root README.txt
     info2 = zipfile.ZipInfo('README.txt')
-    info2.date_time = (2026, 11, 10, 16, 50, 0)
+    info2.date_time = (2026, 11, 10, 17, 50, 0)
     info2.compress_type = zipfile.ZIP_DEFLATED
     info2.external_attr = 0o100644 << 16
     z.writestr(info2, readme_text)

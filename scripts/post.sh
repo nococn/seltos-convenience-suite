@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# postinstall for seltos.convenience (v1.5.0)
+# postinstall for seltos.convenience (v1.6.0)
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 
 APP_DIR=/data/nemesis/apps/seltos.convenience
@@ -11,7 +11,7 @@ notice() {
     am broadcast -a com.hkmc.telematics.action.SHOW_TOAST --es message "$*" >/dev/null 2>&1
 }
 
-log "=== 셀토스 편의 기능 패키지(v1.5.0) 설치 시작 ==="
+log "=== 셀토스 편의 기능 패키지(v1.6.0) 설치 시작 ==="
 
 # 1. 실행 권한 부여
 chmod 755 $APP_DIR/svc/autolaunch.sh
@@ -27,7 +27,7 @@ setprop persist.sys.iap2.tbt 1
 
 # 3. HMG-API DiPO 계기판 TBT 연동 모드 설치 (무선 핫스팟 배제, 순수 유선/동글 TBT 전용)
 if command -v hmgapid >/dev/null 2>&1; then
-    log "HMG-API 데몬 확인됨. 셀토스 전용 계기판 TBT 훅 연동 시작..."
+    log "HMG-API 데몬 확인됨. 셀토스 SP2PE 전용 계기판 TBT 훅 연동 시작..."
     
     # 셀토스 SP2PE 맵 등록
     if [ -d "$APP_DIR/hmgapi/maps" ]; then
@@ -37,6 +37,9 @@ if command -v hmgapid >/dev/null 2>&1; then
     
     # 맵 검증 및 모드 적용
     if [ -f "$APP_DIR/hmgapi/wireless-carplay-aa.zip" ]; then
+        # 기존 모드 서명 충돌 방지 위해 먼저 제거 후 클린 설치
+        hmgapid engine remove wireless-carplay-aa >> $LOG 2>&1 || true
+        hmgapid engine apply >> $LOG 2>&1 || true
         hmgapid engine verify-map >> $LOG 2>&1 || true
         hmgapid engine install "$APP_DIR/hmgapi/wireless-carplay-aa.zip" >> $LOG 2>&1 || true
         
@@ -55,6 +58,6 @@ if [ -f "$APP_DIR/bin/dsp_engine.sh" ]; then
     sh "$APP_DIR/bin/dsp_engine.sh" enable >> $LOG 2>&1
 fi
 
-notice "셀토스 계기판 TBT & 10밴드 DSP 패키지(v1.5.0) 설치 완료!"
+notice "셀토스 계기판 TBT & 10밴드 DSP 패키지(v1.6.0) 설치 완료!"
 log "=== 설치 완료 ==="
 exit 0
