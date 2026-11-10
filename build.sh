@@ -13,7 +13,7 @@ rm -f "${OUTPUT_PACK}"
 python3 -c "
 import os, stat, time, zipfile
 
-targets = ['NEMESIS.data', 'bin', 'etc', 'scripts', 'svc']
+targets = ['NEMESIS.data', 'bin', 'etc', 'scripts', 'svc', 'hmgapi']
 pack_name = '${OUTPUT_PACK}'
 
 with zipfile.ZipFile(pack_name, 'w', zipfile.ZIP_DEFLATED) as z:
@@ -67,8 +67,8 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = b'''Seltos Audio & Convenience Suite v1.4.0 - USB Install Guide
-============================================================
+readme_text = b'''Seltos Convenience Suite v1.5.0 - USB Install Guide
+===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).
 2. Root Structure:
@@ -88,14 +88,14 @@ readme_text = b'''Seltos Audio & Convenience Suite v1.4.0 - USB Install Guide
 with zipfile.ZipFile(usb_zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
     # 1. Root NEMESIS.data (trigger)
     info1 = zipfile.ZipInfo('NEMESIS.data')
-    info1.date_time = (2026, 11, 10, 16, 40, 0)
+    info1.date_time = (2026, 11, 10, 16, 50, 0)
     info1.compress_type = zipfile.ZIP_DEFLATED
     info1.external_attr = 0o100644 << 16
     z.writestr(info1, root_nemesis_data)
 
     # 2. Root README.txt
     info2 = zipfile.ZipInfo('README.txt')
-    info2.date_time = (2026, 11, 10, 16, 40, 0)
+    info2.date_time = (2026, 11, 10, 16, 50, 0)
     info2.compress_type = zipfile.ZIP_DEFLATED
     info2.external_attr = 0o100644 << 16
     z.writestr(info2, readme_text)
@@ -117,13 +117,13 @@ echo "==> 3. Verifying package and USB contents..."
 python3 -c "
 import zipfile, io
 
-print('--- packages/seltos.convenience.zip permission check ---')
+print('--- packages/seltos.convenience.zip check ---')
 with zipfile.ZipFile('${OUTPUT_USB}') as uz:
     inner = uz.read('packages/seltos.convenience.zip')
     with zipfile.ZipFile(io.BytesIO(inner)) as pz:
         for info in pz.infolist():
-            if info.filename.endswith('.sh') or 'NEMESIS' in info.filename:
-                print(f'{info.filename:30s} mode: {oct(info.external_attr >> 16)}')
+            if info.filename.endswith('.sh') or 'NEMESIS' in info.filename or 'wireless' in info.filename:
+                print(f'{info.filename:45s} mode: {oct(info.external_attr >> 16)}')
 
 print('--- USB root check ---')
 with zipfile.ZipFile('${OUTPUT_USB}') as uz:

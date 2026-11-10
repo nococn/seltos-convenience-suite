@@ -1,17 +1,20 @@
-# 🚙 기아 더 뉴 셀토스 6스피커 맞춤 ALSA DSP 튜닝 패키지 (Gen5W)
+# 🚙 기아 더 뉴 셀토스 편의 기능 패키지 (Gen5W Seltos Suite)
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Vehicle: Kia Seltos SP2PE](https://img.shields.io/badge/Vehicle-Kia_Seltos_SP2PE-darkred.svg)](https://www.kia.com)
 [![Infotainment: Gen5W Standard-class](https://img.shields.io/badge/Infotainment-Mobis_Gen5W-success.svg)](https://github.com/nococn/seltos-convenience-suite)
 [![Platform: Android 4.4.2 KitKat](https://img.shields.io/badge/Platform-Android_4.4.2_KitKat-orange.svg)](https://github.com/nococn/seltos-convenience-suite)
 [![Audio: 10--Band ALSA DSP](https://img.shields.io/badge/Audio-ALSA_DSP_10--Band_EQ-blueviolet.svg)](https://github.com/nococn/seltos-convenience-suite)
+[![Navi: Cluster TBT Hook](https://img.shields.io/badge/Navi-Cluster_TBT_Injection-success.svg)](https://github.com/nococn/seltos-convenience-suite)
 
-> **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 음향 패키지**  
-> **기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ (-5.0dBFS 마스터 프리앰프 무왜곡) · 원터치 A/B 비교 청음 토글 (v1.4.0)**
+> **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 패키지**  
+> **유선/동글 카플레이 계기판 턴바이턴(TBT) 연동 · 순정 6스피커 맞춤 ALSA DSP 10밴드 EQ (-5.0dBFS 마스터 프리앰프 무왜곡) · 원터치 A/B 청음 토글 (v1.5.0)**
 
-기아 **더 뉴 셀토스(SP2PE)** 등 현대모비스 5세대 와이드(Gen5W Standard-class) 순정 내비게이션 탑재 차량 중, **순정 기본 6스피커(외장 앰프 미적용 사양)**의 먹먹한 대역 밸런스를 개선하고 디지털 클리핑 왜곡을 방지하기 위해 실차 음향 계측을 바탕으로 정밀 튜닝된 전용 ALSA DSP 패키지입니다.
+기아 **더 뉴 셀토스(SP2PE)** 등 현대모비스 5세대 와이드(Gen5W Standard-class) 순정 내비게이션 탑재 차량 전용 패키지입니다.
 
-NEMESIS 매니저를 통해 순정 시스템의 손상 없이 USB로 원터치 설치 및 100% 원복이 가능합니다.
+실차 주행 테스트 피드백을 바탕으로 하드웨어 제약상 불가능한 미작동 루틴(가짜 HUD 오버레이, 물리 별표 버튼 후킹, Wi-Fi 핫스팟 의존성)을 전면 배제하고, 실차에서 완벽하게 동작하는 **2대 핵심 실질 기능**에 집중하여 개발되었습니다:
+1. **유선 케이블 및 사제 무선 동글(카링킷 등) 전용 순수 DiPO + iAP2 계기판 턴바이턴(TBT) 연동**
+2. **순정 기본 6스피커 하드웨어 맞춤형 ALSA DSP 10밴드 파라메트릭 EQ (-5.0dBFS 마스터 프리앰프 헤드룸 보호)**
 
 ---
 
@@ -26,17 +29,24 @@ NEMESIS 매니저를 통해 순정 시스템의 손상 없이 USB로 원터치 �
 
 ### 2. 음향 신호 보호: -5.0dBFS 마스터 프리앰프 헤드룸 설계 원리
 * 순정 기본 6스피커 환경에서 고역 해상도를 확보하기 위해 8kHz(+3.0dB) 및 16kHz(+3.5dB) 부스트를 적용하면 인접 Biquad 필터 스커트가 중첩되어 12k~14kHz 대역에서 최대 **+4.39dB 합성 피크**가 발생합니다.
-* 마스터 게인 감쇄가 부족할 경우, 볼륨 30 이상 고음압 재생 시 헤드유닛 DAC에서 심각한 디지털 피크 클리핑(Inter-sample Peak Distortion)과 앰프 스퀘어파 왜곡이 발생하여 스피커 보이스코일 과열을 초래할 수 있습니다.
 * 본 패키지는 ALSA `route` 플러그인의 `ttable` 변환 계수를 `0.562`(-5.0dBFS)로 설정하여 **합성 피크(+4.39dB)를 완벽히 상쇄**하고, 0dBFS 최대 디지털 입력 시에도 **-0.61dBFS의 절대 안전 헤드룸**을 상시 보장합니다.
 
 ---
 
-## 🌟 주요 기능 (Key Features)
+## 🌟 2대 핵심 기능 (Key Features)
 
-### 1. 🎚️ 기본 6스피커 하드웨어 맞춤형 ALSA DSP 10밴드 파라메트릭 EQ (v1.4.0)
-* **내장 앰프 보호 및 초저역 롤오프 (31.5Hz -2.0dB, Q=0.7)**: 외장 앰프가 없는 순정 헤드유닛 내장 앰프(20W급)의 출력 한계와 도어 우퍼 페이퍼 콘의 과진동을 방지하기 위해 31.5Hz 초저역을 버터워스 로우쉘프(Q=0.7)로 부드럽게 롤오프하여 앰프 전력 낭비와 찌그러짐을 차단합니다.
-* **타격감 집중 및 도어 트림 공진 억제**: 63Hz(+3.5dB, Q=1.1)에 킥베이스 펀치력을 집중시키고, 도어 플라스틱 트림 부밍을 유발하는 125Hz는 +1.5dB(Q=1.2)로 정밀 제어하며, 박스형 공진 대역인 250Hz는 -1.0dB(Q=1.8) 핀포인트 노치 필터로 깎아 단단하고 정갈한 저역을 구현합니다.
-* **보컬 전면 정위감 및 고역 개방감**: 1kHz(-1.0dB, Q=1.2)와 2kHz(-0.5dB, Q=1.4)로 내비게이션 쏘는 소리를 다듬으면서도 보컬 후퇴를 방지하여 중심을 잡고, 4kHz(+1.0dB, Q=1.2), 8kHz(+3.0dB, Q=1.1), 16kHz(+3.5dB, Q=1.4)로 기본 스피커의 답답한 음색을 걷어내고 청량한 공간감을 부여합니다.
+### 1. 🧭 카플레이 계기판 턴바이턴(TBT) 연동 (유선 & 사제 무선 동글 전용)
+* **순수 DiPO + iAP2 라우트 가이던스 엔진**:
+  * 내비 내부 `Iap2Service`의 `iAP2UsedRouteGuidance` 스트리밍을 개방하여 아이폰 내비(티맵, 카카오내비, 애플 지도)가 회전 및 거리 패킷을 전송하도록 유도합니다.
+  * `com.daudio.app.dipo.telechips.CarPlayService`의 `oniAPSendMessage`를 가로채 순정 계기판 CAN TBT 규격으로 실시간 변환 주입합니다.
+* **무선 핫스팟/Wi-Fi 종속성 완전 배제**:
+  * 기존 코리아 프로젝션이 셀토스의 Wi-Fi 칩셋 부재(DNP)로 인해 핫스팟 실패 시 TBT 모듈까지 전체 롤백되던 구조적 결함을 완벽히 해결했습니다.
+  * Wi-Fi 검사 루틴을 100% 제거하여 유선 케이블 직결 및 사제 무선 동글(카링킷, 주파집 등) 환경에서 셀토스 10.25인치 슈퍼비전 클러스터 내비 탭에 턴바이턴 화살표와 남은 거리가 상시 안정적으로 표출됩니다.
+
+### 2. 🎚️ 기본 6스피커 하드웨어 맞춤형 ALSA DSP 10밴드 파라메트릭 EQ (v1.5.0)
+* **내장 앰프 보호 및 초저역 롤오프 (31.5Hz -2.0dB, Q=0.7)**: 도어 우퍼 페이퍼 콘의 과진동을 방지하고 20W급 순정 내장 앰프의 전력 낭비와 찌그러짐을 차단합니다.
+* **타격감 집중 및 도어 트림 공진 억제**: 63Hz(+3.5dB, Q=1.1)에 킥베이스 펀치력을 집중시키고, 도어 플라스틱 부밍을 유발하는 125Hz는 +1.5dB(Q=1.2)로 제어하며, 캐비티 공진 대역인 250Hz는 -1.0dB(Q=1.8) 핀포인트 노치 필터로 깎아 단단한 저역을 구현합니다.
+* **보컬 전면 정위감 및 고역 개방감**: 1kHz(-1.0dB, Q=1.2)와 2kHz(-0.5dB, Q=1.4)로 내비게이션 쏘는 소리를 다듬으면서도 보컬 후퇴를 방지하고, 4kHz(+1.0dB, Q=1.2), 8kHz(+3.0dB, Q=1.1), 16kHz(+3.5dB, Q=1.4)로 기본 스피커의 답답한 음색을 걷어냅니다.
 * **마스터 프리앰프 -5.0dBFS 무왜곡 보장**: 10개 전 밴드 필터 상호작용 분석 결과, 최대 음압에서도 클리핑 마진 -0.61dBFS를 상시 유지합니다.
 
 | 밴드 | 중심 주파수 | 게인 (Gain) | Q값 | 필터 특성 및 튜닝 목적 |
@@ -52,27 +62,13 @@ NEMESIS 매니저를 통해 순정 시스템의 손상 없이 USB로 원터치 �
 | **Band 9** | **8 kHz** | **+3.0 dB** | 1.1 | 심벌 및 어쿠스틱 악기 에어감(Sparkle) 형성 |
 | **Band 10** | **16 kHz** | **+3.5 dB** | 1.4 | 초고역 개방감 복원 (마스터 프리앰프로 피크 상쇄) |
 
-### 2. 🔄 ALSA DSP 10밴드 EQ 원터치 A/B 비교 청음 토글 (`bin/audio_toggle.sh`)
-* **단일 런처 메뉴 일원화**: 기존의 ON/OFF 분리 나열로 인한 UI 혼선을 해소하고, NEMESIS 런처에 **단일 원터치 토글 아이콘**으로 통합했습니다.
-* **실시간 A/B 청음**: 주행 중 터치 한 번으로 `순정 모비스 플랫 음향`과 `셀토스 맞춤 10밴드 DSP EQ`를 즉각 교차 전환하며 사운드 스테이지 확장의 차이를 직접 체감할 수 있습니다. 상태 전환 시 화면 상단 시스템 토스트로 현재 음향 모드가 안내됩니다.
+### 3. 🔄 단일 원터치 A/B 비교 청음 토글 (`bin/audio_toggle.sh`)
+* **NEMESIS 런처 메뉴 일원화 및 동시 토스트 버그 해결**: 기존의 ON/OFF 분리 나열로 발생하던 중복 토스트 버그를 제거하고, NEMESIS 런처에 **단일 원터치 토글 아이콘**으로 통합했습니다.
+* **실시간 A/B 청음**: 주행 중 터치 한 번으로 `순정 플랫 음향`과 `셀토스 10밴드 DSP EQ`를 즉각 교차 전환하며 사운드 스테이지 차이를 체감할 수 있습니다. 상태 전환 시 명확한 단일 시스템 토스트가 표출됩니다.
 
-### 3. ⚡ 스마트 카플레이 자동 화면 전환 (Auto-Launch Daemon)
+### 4. ⚡ 스마트 카플레이 자동 화면 전환 (Auto-Launch Daemon)
 * **이벤트 기반 백그라운드 데몬 (`svc/autolaunch.sh`)**: 카플레이 연결 완료 브로드캐스트 이벤트를 실시간 감지하여, 부팅 후 카플레이 화면으로 자동 전환합니다.
 * **후방카메라 안전 인터락 (Safety Interlock)**: 후진(R단) 중일 때는 화면 전환 명령을 안전하게 보류하고, 후방 카메라가 해제된 후 부드럽게 카플레이 화면을 띄웁니다.
-
----
-
-## 🚘 호환 차종 현황
-
-| 제작사 | 차종 (코드명) | 적용 연식 | 내비게이션 플랫폼 | 호환 상태 | 비고 |
-| :--- | :--- | :--- | :--- | :---: | :--- |
-| **기아** | **더 뉴 셀토스 (SP2PE)** | 2022 ~ 현재 | Standard Gen5W (10.25") | ✅ **실차 검증 완료** | v1.4.0 리팩토링 패키지 적용 |
-| **기아** | 스포티지 (NQ5) | 2021 ~ 2024 | Standard Gen5W (12.3") | 🟡 플랫폼 호환 | 파노라믹 커브드 디스플레이 |
-| **기아** | K5 (DL3) | 2019 ~ 2023 | Standard Gen5W (10.25") | 🟡 플랫폼 호환 | 페이스리프트 전 Gen5W 모델 |
-| **기아** | 쏘렌토 (MQ4) | 2020 ~ 2023 | Standard Gen5W (10.25") | 🟡 플랫폼 호환 | 페이스리프트(ccNC) 이전 모델 |
-| **현대** | 아반떼 (CN7) | 2020 ~ 현재 | Standard Gen5W (10.25") | 🟡 플랫폼 호환 | 내수용 10.25인치 와이드 내비 |
-| **현대** | 투싼 (NX4) | 2020 ~ 2023 | Standard Gen5W (10.25") | 🟡 플랫폼 호환 | 페이스리프트 전 모델 |
-| **현대** | 쏘나타 (DN8) | 2019 ~ 2023 | Standard Gen5W (10.25") | 🟡 플랫폼 호환 | 쏘나타 디 엣지(ccNC) 이전 모델 |
 
 ---
 
@@ -81,11 +77,11 @@ NEMESIS 매니저를 통해 순정 시스템의 손상 없이 USB로 원터치 �
 ### 1단계: USB 드라이브 구조 준비
 1. **FAT32** 파일 시스템으로 포맷된 USB 메모리를 준비합니다.
 2. [Releases](https://github.com/nococn/seltos-convenience-suite/releases) 탭에서 `seltos-convenience-usb.zip`을 다운로드하여 USB 최상위 루트에 압축 해제합니다.
-3. USB 최상위 루트가 다음과 같은 구조인지 확인합니다:
+3. USB 최상위 루트 구조:
 
 ```text
 USB Drive (FAT32 Root)
-├── NEMESIS.data              <-- v1.4.0 자동 설치 트리거 (type=install)
+├── NEMESIS.data              <-- v1.5.0 자동 설치 트리거 (type=install)
 ├── README.txt
 └── packages/
     └── seltos.convenience.zip <-- 실제 설치 패키지 번들
@@ -100,26 +96,28 @@ USB Drive (FAT32 Root)
 5. 설치 완료 토스트가 표출되면 USB를 제거하고, 전면 리셋 홀(RESET pinhole)을 눌러 내비게이션을 1회 재부팅합니다.
 
 ### 3단계: 100% 순정 원복 보장 (Clean Restore Guide)
-차량 정기 점검, 공식 서비스센터 보증 수리 또는 순정 상태 복원이 필요한 경우 완벽한 롤백을 지원합니다:
-
 1. 인포테인먼트 화면에서 **NEMESIS Manager**를 실행합니다.
-2. 설치된 패키지 목록에서 **셀토스 음향 DSP 튜닝 패키지 (`seltos.convenience`)**를 선택합니다.
+2. 설치된 패키지 목록에서 **셀토스 편의 기능 패키지 (`seltos.convenience`)**를 선택합니다.
 3. **[Uninstall / 삭제]** 버튼을 터치합니다.
 4. **원복 메커니즘**:
-   * 패키지 삭제 시 `bin/dsp_engine.sh disable`이 자동 실행되어 `/data/local/asound.conf`가 삭제되고 ALSA 하드웨어 믹서가 순정 플랫(Flat) 상태로 1:1 복원됩니다.
-   * 백그라운드 데몬 및 스크립트 파일이 완전히 정리됩니다.
-   * 내비게이션을 재부팅하면 차량 출고 시점의 100% 순정 오디오 상태로 안전하게 복구됩니다.
+   * HMG-API TBT 엔진 및 등록된 모드가 원상 복원됩니다.
+   * `bin/dsp_engine.sh disable`이 자동 실행되어 `/data/local/asound.conf`가 삭제되고 ALSA 하드웨어 믹서가 순정 플랫(Flat) 상태로 1:1 복원됩니다.
+   * 내비게이션을 재부팅하면 차량 출고 시점의 100% 순정 상태로 안전하게 복구됩니다.
 
 ---
 
 ## 🛡️ 시스템 아키텍처 및 안전성
 
 ```text
-[ Apple iPhone / Carlinkit Dongle ]
-              │ (USB iAP2 Protocol)
+[ Apple iPhone / Carlinkit Wireless Dongle ]
+              │ (USB iAP2 Protocol: Route Guidance Packets)
               ▼
 [ Gen5W Infotainment (Android 4.4.2) ]
    ├── svc/autolaunch.sh       ──▶ CarPlay Session Event Detection (Reverse Camera Safe)
+   ├── hmgapi (DiPO TBT Hook)  ──▶ Intercepts CarPlayService.oniAPSendMessage
+   │                                        │
+   │                                        ▼
+   │                             [ 10.25" Supervision Cluster TBT Display ]
    └── bin/dsp_engine.sh       ──▶ ALSA DSP 10-Band Parametric EQ Engine (-5.0dB Preamp)
                                             │
                                             ▼
@@ -135,8 +133,9 @@ USB Drive (FAT32 Root)
 
 본 프로젝트는 현대·기아 오픈소스 전장 연구 커뮤니티의 소중한 선행 연구를 바탕으로 제작되었습니다.
 
+* **HMG-API & HMG-Mod**: `xwtk`, `VysseCodes` (DiPO 클러스터 CAN 프레임워크)
 * **NEMESIS Automotive Mod Manager**: `seogaemo` (패키지 사양 및 매니저)
-* **Korea Projection**: `StopDragon` (하드웨어 진단 및 텔레메트리 연구)
+* **Korea Projection**: `StopDragon` (하드웨어 진단 및 TBT 프로토콜 연구)
 * **ALSA TinyMix Framework**: Android Open Source Project
 
 자세한 저작권 정보는 [NOTICE.md](NOTICE.md)를 참조하십시오.  
