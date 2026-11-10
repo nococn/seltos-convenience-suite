@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# postinstall for seltos.convenience
+# postinstall for seltos.convenience (v1.4.0)
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 
 APP_DIR=/data/nemesis/apps/seltos.convenience
@@ -11,40 +11,24 @@ notice() {
     am broadcast -a com.hkmc.telematics.action.SHOW_TOAST --es message "$*" >/dev/null 2>&1
 }
 
-log "=== 셀토스 편의 패키지 설치 시작 ==="
+log "=== 셀토스 음향 DSP 튜닝 패키지 설치 시작 ==="
 
 # 1. 실행 권한 부여
 chmod 755 $APP_DIR/svc/autolaunch.sh
-chmod 755 $APP_DIR/svc/hud_telemetry.sh
+chmod 755 $APP_DIR/bin/audio_toggle.sh
 chmod 755 $APP_DIR/bin/audio_on.sh
 chmod 755 $APP_DIR/bin/audio_off.sh
 chmod 755 $APP_DIR/bin/dsp_engine.sh
-chmod 755 $APP_DIR/bin/hud_toggle.sh
 
-# 2. HMG-API 모드(TBT 클러스터 연동 및 AAC 오디오) 설치
-if command -v hmgapid >/dev/null 2>&1; then
-    log "HMG-API 데몬 확인됨. TBT 및 오디오 모드 설치 시도..."
-    
-    # 지도 복사 (필요시)
-    if [ -d $APP_DIR/hmgapi/maps ] && [ -d /data/hmgapi/maps ]; then
-        cp -r $APP_DIR/hmgapi/maps/* /data/hmgapi/maps/ 2>/dev/null || true
-    fi
-    
-    # 모드 설치 및 적용
-    hmgapid engine install $APP_DIR/hmgapi/wireless-carplay-aa.zip >> $LOG 2>&1
-    hmgapid engine apply >> $LOG 2>&1
-    log "HMG-API 모드 적용 완료."
-fi
-
-# 3. 카플레이 프로젝션 속성 확인
+# 2. 카플레이 프로젝션 속성 확인
 setprop persist.ium.support carplay
 
-# 4. ALSA DSP 10밴드 파라메트릭 EQ 및 라우드니스 기본 활성화
-if [ -f "$APP_DIR/bin/audio_on.sh" ]; then
-    log "ALSA DSP 10밴드 파라메트릭 EQ 및 라우드니스 적용..."
-    sh "$APP_DIR/bin/audio_on.sh" >> $LOG 2>&1
+# 3. ALSA DSP 10밴드 파라메트릭 EQ 기본 활성화
+if [ -f "$APP_DIR/bin/dsp_engine.sh" ]; then
+    log "기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ 적용..."
+    sh "$APP_DIR/bin/dsp_engine.sh" enable >> $LOG 2>&1
 fi
 
-notice "셀토스 편의 기능 패키지(v1.3.2)가 성공적으로 설치되었습니다!"
+notice "셀토스 6스피커 맞춤 ALSA DSP 10밴드 EQ 패키지(v1.4.0)가 설치되었습니다!"
 log "=== 설치 완료 ==="
 exit 0

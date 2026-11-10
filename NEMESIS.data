@@ -1,11 +1,11 @@
 [nemesis]
 version=1.1
 id=seltos.convenience
-name=셀토스 편의 기능 패키지 (Seltos Suite)
+name=셀토스 음향 DSP 튜닝 패키지 (Seltos Audio Suite)
 type=service,application
-package-version=1.3.2
-short-desc="카플레이 TBT 연동, ALSA 10밴드 EQ, HUD 텔레메트리"
-detailed-desc="기아 더 뉴 셀토스 SP2PE 전용: 카플레이 TBT 클러스터 연동, 순정 6스피커 맞춤 ALSA DSP 10밴드 EQ(-5.0dB 마스터 프리앰프), HUD 미니 텔레메트리 OSD 및 핸들 별표(★) 원터치 토글 지원."
+package-version=1.4.0
+short-desc="셀토스 기본 6스피커 맞춤 ALSA DSP 10밴드 파라메트릭 EQ"
+detailed-desc="기아 더 뉴 셀토스 SP2PE Gen5W 전용: 기본 6스피커 맞춤 ALSA 하드웨어 DSP 10밴드 파라메트릭 EQ, -5.0dBFS 마스터 프리앰프 게인 스태킹 클리핑 방어, 원터치 A/B 청음 토글 지원."
 os="SP2PE.KOR.*"
 models="*_kr"
 postinstall=scripts/post.sh
@@ -13,32 +13,13 @@ preuninstall=scripts/preun.sh
 
 [app.0]
 kind=sh
-name=오디오 고음질 ON (AAC + 10밴드 EQ)
-path=bin/audio_on.sh
-uid=root
-
-[app.1]
-kind=sh
-name=오디오 순정 모드 OFF (A/B 플랫 비교)
-path=bin/audio_off.sh
-uid=root
-
-[app.2]
-kind=sh
-name=HUD 미니 텔레메트리 토글 (핸들 ★ 연동)
-path=bin/hud_toggle.sh
+name=10밴드 DSP EQ 음향 토글 (A/B 청음)
+path=bin/audio_toggle.sh
 uid=root
 
 [service.0]
 name=cp-autolaunch
 kind=sh
 path=svc/autolaunch.sh
-uid=root
-mode=restart
-
-[service.1]
-name=seltos-hud-telemetry
-kind=sh
-path=svc/hud_telemetry.sh
 uid=root
 mode=restart

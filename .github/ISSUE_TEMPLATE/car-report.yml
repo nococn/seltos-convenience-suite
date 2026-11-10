@@ -1,0 +1,71 @@
+name: "🚘 차량별 음향 및 호환성 제보 (Vehicle Audio & Compatibility Report)"
+description: 더 뉴 셀토스 외 Gen5W 플랫폼 차량에서의 ALSA DSP 10밴드 EQ 음향 체감 및 호환성을 제보합니다.
+title: "[Report]: <제작사 차종 (코드명, 연식)> - 실차 호환성 및 청음 제보"
+labels: ["compatibility", "vehicle-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        기아 더 뉴 셀토스(SP2PE) 외 현대·기아 Standard Gen5W 내비게이션 플랫폼 탑재 차량에서 **셀토스 음향 DSP 튜닝 패키지(v1.4.0)**를 적용해 보신 후, 차종별 호환성과 음향 체감을 공유해 주시면 공식 지원 목록에 반영됩니다.
+
+  - type: input
+    id: vehicle-info
+    attributes:
+      label: 차량 정보 (Vehicle Model & Year)
+      description: 차종명, 세부 트림, 코드명, 연식을 기재해 주세요. (예: 기아 스포티지 NQ5 1.6T 2023년식)
+      placeholder: "예: 기아 K5 DL3 1.6T 2022년식"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: audio-option
+    attributes:
+      label: 차량 오디오 사양 (Audio Specification)
+      description: 외장 앰프 적용 여부를 선택해 주세요.
+      options:
+        - "순정 기본 6스피커 (외장 앰프 미적용 사양 - 강력 권장)"
+        - "크렐 (KRELL) 프리미엄 사운드 (외장 앰프)"
+        - "보스 (BOSE) 프리미엄 사운드 (외장 앰프)"
+        - "기타 (직접 기재)"
+    validations:
+      required: true
+
+  - type: input
+    id: firmware-version
+    attributes:
+      label: 펌웨어 빌드 버전 (Firmware Build)
+      description: 설정 > 일반 > SW 정보에서 확인되는 펌웨어 버전 문자열을 기재해 주세요.
+      placeholder: "예: NQ5.KOR.S5W_M.V011.005.240711"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: verified-features
+    attributes:
+      label: 정상 동작 확인 항목 (Verified Functional Checklist)
+      description: 실차에서 정상 작동을 확인한 기능을 선택해 주세요.
+      options:
+        - label: "NEMESIS USB 원터치 패키지 설치 정상 완료"
+        - label: "ALSA 하드웨어 믹서 DSP 10밴드 파라메트릭 EQ 적용 (음색 변화 확인)"
+        - label: "NEMESIS 런처 내 10밴드 DSP EQ 원터치 A/B 토글 작동"
+        - label: "스마트 카플레이 자동 화면 전환 (Auto-Launch Daemon)"
+        - label: "후방카메라 안전 인터락 (후진 중 화면 전환 보류)"
+
+  - type: textarea
+    id: listening-impressions
+    attributes:
+      label: 실차 청음 체감 및 음질 피드백 (Acoustic Impressions & Feedback)
+      description: 순정 플랫 대비 저역 펀치감, 도어 트림 부밍 억제, 고역 명료도, 디지털 클리핑 여부 등 청음 체감을 자유롭게 남겨주세요.
+      placeholder: |
+        - 저역 타격감 및 단단함:
+        - 보컬 중심 정위감:
+        - 고역 개방감 및 트위터 명료도:
+        - 볼륨 30 이상 고음압 시 왜곡/클리핑 여부:
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: 추가 참고사항 및 제언 (Additional Notes)
+      description: 설치 과정에서 겪은 특이사항이나 개선 제안이 있다면 작성해 주세요.
