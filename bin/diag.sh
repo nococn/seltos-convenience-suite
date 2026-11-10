@@ -14,6 +14,7 @@ sec "asound.conf";  ls -l /data/local/asound.conf 2>&1
 sec "install log";  tail -80 /data/local/tmp/seltos-suite-install.log 2>&1
 sec "dsp log";      tail -60 /data/local/tmp/seltos-dsp-status.log 2>&1
 sec "autolaunch";   tail -30 /data/local/tmp/cp-autolaunch.log 2>&1
+sec "iap2/tbt logcat"; logcat -d -v time | grep -iE "routeguidance|iap2|dipo|cluster|tbt|hmg-api" | tail -150 2>&1
 } > "$OUT" 2>&1
 for d in /storage/*/ /mnt/media_rw/*/ /mnt/udisk/ /udisk/ /mnt/usb*/; do
     [ -d "$d" ] && [ -w "$d" ] && cp "$OUT" "${d}seltos-diag.txt" 2>/dev/null
