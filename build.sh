@@ -67,7 +67,7 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = b'''Seltos Convenience Suite v1.6.0 - USB Install Guide
+readme_text = b'''Seltos Convenience Suite v1.7.0 - USB Install Guide
 ===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).

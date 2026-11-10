@@ -8,7 +8,7 @@
 [![Navi: Cluster TBT Hook](https://img.shields.io/badge/Navi-Cluster_TBT_Injection-success.svg)](https://github.com/nococn/seltos-convenience-suite)
 
 > **기아 더 뉴 셀토스(SP2PE) 순정 5W 내비게이션 전용 NEMESIS 패키지**  
-> **SP2PE 맞춤 TBT 엔진 탑재 · 순정 6스피커 맞춤 ALSA DSP 10밴드 EQ (-5.0dBFS 마스터 프리앰프 무왜곡) · 원터치 A/B 청음 토글 (v1.6.0)**
+> **SP2PE 실차 계측 해시 TBT 엔진 탑재 · 순정 6스피커 맞춤 ALSA DSP 10밴드 EQ (-5.0dBFS 마스터 프리앰프 무왜곡) · 원터치 A/B 청음 토글 (v1.7.0)**
 
 기아 **더 뉴 셀토스(SP2PE)** 등 현대모비스 5세대 와이드(Gen5W Standard-class) 순정 내비게이션 탑재 차량 전용 패키지입니다.
 
