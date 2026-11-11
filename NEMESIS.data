@@ -3,9 +3,9 @@ version=1.1
 id=seltos.convenience
 name=셀토스 편의 기능 패키지 (Seltos Suite)
 type=service,application
-package-version=1.8.0
-short-desc="셀토스 SP2PE 실차 프레임워크 해시 정밀 동기화 & 클러스터 TBT 연동"
-detailed-desc="v1.8.0: 실차 진단 덤프 기반 18개 odex 해시 100% 동기화 (verify-map 통과), RFC 9562 v8 키 일치 서명 바이너리 실장, 클러스터 TBT 훅 활성화 및 10밴드 EQ -5.0dBFS 마스터 프리앰프 완비."
+package-version=1.8.1
+short-desc="셀토스 SP2PE 실차 프레임워크 해시 동기화, 안전 plan 검증 및 TBT 연동"
+detailed-desc="v1.8.1: 실차 진단 데이터 5대 핵심 사항 전량 반영. tee/head/cut 제거 및 autolaunch 12초 무한 반복 루프 완치, 실차 맵 동적 생성(map-car --write) 및 verify-map 보장, 안전 plan 검증 및 원터치 apply 지원."
 os="SP2PE.KOR.*"
 models="*_kr"
 postinstall=scripts/post.sh
@@ -24,6 +24,12 @@ path=bin/diag.sh
 uid=root
 
 [app.2]
+kind=sh
+name=TBT 모드 시스템 적용 (apply)
+path=bin/apply_tbt.sh
+uid=root
+
+[app.3]
 kind=sh
 name=로그 기록 켜기/끄기 (끄면 기록 삭제)
 path=bin/logger_toggle.sh

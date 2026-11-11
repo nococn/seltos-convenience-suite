@@ -47,6 +47,8 @@ sec "audio libs";  ls /system/lib/hw 2>&1 | grep -i -E "audio|tinyalsa" ; ls /sy
 sec "install log"; tailn 150 /data/local/tmp/seltos-suite-install.log
 sec "status";      tailn 40 /data/local/tmp/seltos-status.txt
 sec "dsp log";     tailn 40 /data/local/tmp/seltos-dsp-status.log
+sec "logger status"; ls -l /data/local/tmp/seltos-logger.* 2>&1; [ -f /data/local/tmp/seltos-logger.err ] && cat /data/local/tmp/seltos-logger.err 2>&1
+sec "plan status";   [ -f /data/local/tmp/seltos-plan.txt ] && cat /data/local/tmp/seltos-plan.txt 2>&1
 sec "autolaunch";  tailn 40 /data/local/tmp/cp-autolaunch.log
 sec "내부 logcat 기록 (seltos-logcat.log*, 유선 시험 중 기록분)"
 LF=/data/local/tmp/seltos-logcat.log
@@ -63,6 +65,8 @@ rm -f "$TMP" "$TMP.2"
 for d in /storage/*/ /mnt/media_rw/*/ /mnt/udisk/ /udisk/ /mnt/usb*/ /storage/usbdisk*/; do
     if [ -d "$d" ] && [ -w "$d" ]; then
         cp "$OUT" "${d}seltos-diag.txt" 2>/dev/null
+        [ -f /data/local/tmp/seltos-plan.txt ] && cp /data/local/tmp/seltos-plan.txt "${d}seltos-plan.txt" 2>/dev/null
+        [ -f /data/local/tmp/seltos-logger.err ] && cp /data/local/tmp/seltos-logger.err "${d}seltos-logger.err" 2>/dev/null
         for n in "" .1 .2 .3; do [ -f "/data/local/tmp/seltos-logcat.log$n" ] && cp "/data/local/tmp/seltos-logcat.log$n" "${d}seltos-logcat${n}.txt" 2>/dev/null; done
     fi
 done
