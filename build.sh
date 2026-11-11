@@ -67,7 +67,7 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = '''Seltos Convenience Suite v1.7.1 - USB Install Guide
+readme_text = '''Seltos Convenience Suite v1.8.0 - USB Install Guide
 ===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).
@@ -83,7 +83,7 @@ readme_text = '''Seltos Convenience Suite v1.7.1 - USB Install Guide
    - Insert USB drive into front multimedia USB port.
    - When NEMESIS prompts to install package, tap 'Yes' within 60s.
    - After installation toast appears, reboot head unit via RESET pinhole.
-   - To collect full ALSA/tinymix/HMG-API diagnosis: open NEMESIS apps and tap '셀토스 실차 진단 데이터 수집'.
+   - To verify TBT: Connect iPhone via authentic cable, start Apple Maps/Naver/T-Map navigation, and switch instrument cluster to Navigation/Turn-by-Turn tab.
 '''.encode('utf-8')
 
 with zipfile.ZipFile(usb_zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
