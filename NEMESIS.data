@@ -3,9 +3,9 @@ version=1.1
 id=seltos.convenience
 name=셀토스 편의 기능 패키지 (Seltos Suite)
 type=service,application
-package-version=1.8.1
-short-desc="셀토스 SP2PE 실차 프레임워크 해시 동기화, 안전 plan 검증 및 TBT 연동"
-detailed-desc="v1.8.1: 실차 진단 데이터 5대 핵심 사항 전량 반영. tee/head/cut 제거 및 autolaunch 12초 무한 반복 루프 완치, 실차 맵 동적 생성(map-car --write) 및 verify-map 보장, 안전 plan 검증 및 원터치 apply 지원."
+package-version=1.7.6
+short-desc="셀토스 SP2PE 실차 동적 맵 생성 및 안전 Plan 검증 패키지"
+detailed-desc="v1.7.6: 실차 진단 피드백 3대 원칙 100% 정석 구현. 패키지 지도 전면 제외 후 차내에서 map-car --write 동적 생성, --any-car 모드 plan 결과 안전 수집, autolaunch 12초 루프 완치 및 logger/diag 수집 보강."
 os="SP2PE.KOR.*"
 models="*_kr"
 postinstall=scripts/post.sh
@@ -24,12 +24,6 @@ path=bin/diag.sh
 uid=root
 
 [app.2]
-kind=sh
-name=TBT 모드 시스템 적용 (apply)
-path=bin/apply_tbt.sh
-uid=root
-
-[app.3]
 kind=sh
 name=로그 기록 켜기/끄기 (끄면 기록 삭제)
 path=bin/logger_toggle.sh

@@ -66,7 +66,11 @@ for d in /storage/*/ /mnt/media_rw/*/ /mnt/udisk/ /udisk/ /mnt/usb*/ /storage/us
     if [ -d "$d" ] && [ -w "$d" ]; then
         cp "$OUT" "${d}seltos-diag.txt" 2>/dev/null
         [ -f /data/local/tmp/seltos-plan.txt ] && cp /data/local/tmp/seltos-plan.txt "${d}seltos-plan.txt" 2>/dev/null
+        [ -f /data/local/tmp/seltos-verify-map.txt ] && cp /data/local/tmp/seltos-verify-map.txt "${d}seltos-verify-map.txt" 2>/dev/null
+        [ -f /data/local/tmp/seltos-map-car.log ] && cp /data/local/tmp/seltos-map-car.log "${d}seltos-map-car.log" 2>/dev/null
+        [ -f /data/local/tmp/seltos-suite-install.log ] && cp /data/local/tmp/seltos-suite-install.log "${d}seltos-install-full.log" 2>/dev/null
         [ -f /data/local/tmp/seltos-logger.err ] && cp /data/local/tmp/seltos-logger.err "${d}seltos-logger.err" 2>/dev/null
+        [ -f /data/local/tmp/cp-autolaunch.log ] && cp /data/local/tmp/cp-autolaunch.log "${d}seltos-autolaunch.log" 2>/dev/null
         for n in "" .1 .2 .3; do [ -f "/data/local/tmp/seltos-logcat.log$n" ] && cp "/data/local/tmp/seltos-logcat.log$n" "${d}seltos-logcat${n}.txt" 2>/dev/null; done
     fi
 done
