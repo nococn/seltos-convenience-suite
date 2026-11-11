@@ -67,7 +67,7 @@ type=install
 path=packages/seltos.convenience.zip
 '''
 
-readme_text = '''Seltos Convenience Suite v1.7.6 - USB Install Guide
+readme_text = '''Seltos Convenience Suite v1.0.0 - USB Install Guide
 ===================================================
 
 1. USB Format: FAT32 format (32GB or smaller recommended).
@@ -82,7 +82,7 @@ readme_text = '''Seltos Convenience Suite v1.7.6 - USB Install Guide
    - Start vehicle and wait for head unit navigation to fully boot.
    - Insert USB drive into front multimedia USB port.
    - When NEMESIS prompts to install package, tap 'Yes' within 60s.
-   - Wait for installation toast (Suite v1.7.6 | TBT: 성공(plan rc=0)).
+   - Wait for installation toast (Suite v1.0.0 | TBT: 성공(plan rc=0)).
    - Reboot head unit via RESET pinhole.
    - Re-insert USB drive and run [셀토스 실차 진단 데이터 수집] in NEMESIS Manager.
    - Bring USB back to verify seltos-plan.txt, seltos-verify-map.txt, and seltos-install-full.log.

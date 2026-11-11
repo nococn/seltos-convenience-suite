@@ -1,8 +1,8 @@
 #!/system/bin/sh
-# postinstall for seltos.convenience (v1.7.6)
+# postinstall for seltos.convenience (v1.0.0)
 # 실차 진단 피드백 3대 원칙 100% 정석 구현:
 # 1. 패키지 지도 전면 제외 -> 차내에서 map-car --write로 실차 순정 맵 동적 생성 후 verify-map
-# 2. 모드를 --any-car로 설치하고 절대 apply하지 않고 plan 결과(/data/local/tmp/seltos-plan.txt)만 안전 수집
+# 2. 모드를 단일 인자(install <zip>) 규격으로 설치하고 절대 apply하지 않고 plan 결과(/data/local/tmp/seltos-plan.txt)만 안전 수집
 # 3. tee/head/cut 부재 환경을 고려한 순수 쉘 로깅 및 미지원 명령어(set-setting) 전면 배제
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 APP_DIR=/data/nemesis/apps/seltos.convenience
@@ -20,7 +20,7 @@ toast() { am broadcast -a com.hkmc.telematics.action.SHOW_TOAST --es message "$*
 
 : > "$ST"
 : > "$LOG"
-log "=== 셀토스 편의 기능 패키지(v1.7.6) 설치 시작 ==="
+log "=== 셀토스 편의 기능 패키지(v1.0.0) 설치 시작 ==="
 
 for f in svc/autolaunch.sh bin/audio_toggle.sh bin/audio_on.sh bin/audio_off.sh bin/dsp_engine.sh bin/diag.sh bin/logger_toggle.sh svc/logger.sh; do
     [ -f "$APP_DIR/$f" ] && chmod 755 "$APP_DIR/$f"
@@ -68,12 +68,12 @@ else
     else
         log "지도 검증 통과 (hooks are on 정상)"
         
-        # 4. 기존 모드 정리 후 --any-car 설치
+        # 4. 기존 모드 정리 후 모드 설치 (hmgapid engine install <zip> 단일 규격 준수)
         hmgapid engine remove wireless-carplay-aa >/dev/null 2>&1
-        log "모드 설치 실행: hmgapid engine install --any-car"
-        hmgapid engine install --any-car "$APP_DIR/hmgapi/wireless-carplay-aa.zip" > /data/local/tmp/seltos-install.log 2>&1
+        log "모드 설치 실행: hmgapid engine install"
+        hmgapid engine install "$APP_DIR/hmgapi/wireless-carplay-aa.zip" > /data/local/tmp/seltos-install.log 2>&1
         RC_INST=$?
-        log "install --any-car 종료코드: $RC_INST"
+        log "install 종료코드: $RC_INST"
         cat /data/local/tmp/seltos-install.log >> "$LOG"
 
         if [ $RC_INST -eq 0 ]; then
@@ -103,6 +103,6 @@ EQ="설정 파일 배치 완료 (DSP 직결 환경)"
 log "EQ 결과: $EQ"
 echo "EQ: $EQ" >> "$ST"
 
-toast "Suite v1.7.6 | TBT: $TBT"
+toast "Suite v1.0.0 | TBT: $TBT"
 log "=== 설치 종료 ==="
 exit 0
